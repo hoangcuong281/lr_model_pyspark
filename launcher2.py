@@ -69,6 +69,7 @@ education.layout.width = '200px'
 default.layout.width = '200px'
 balance.layout.width = '200px'
 housing.layout.width = '200px'
+loan.layout.width = '200px'
 contact.layout.width = '200px'
 day.layout.width = '200px'
 month.layout.width = '200px'
@@ -78,7 +79,7 @@ pdays.layout.width = '200px'
 previous.layout.width = '200px'
 poutcome.layout.width = '200px'
 
-def predict():
+def predict(b):
     a = age.value
     b = job.value
     c = marital.value
@@ -86,14 +87,15 @@ def predict():
     e = default.value
     f = balance.value
     g = housing.value
-    h = contact.value
-    i = day.value
-    j = month.value
-    k = duration.value
-    l = campaign.value
-    m = pdays.value
-    o = previous.value
-    p = poutcome.value
+    h = loan.value
+    i = contact.value
+    j = day.value
+    k = month.value
+    l = duration.value
+    m = campaign.value
+    o = pdays.value
+    p = previous.value
+    q = poutcome.value
 
     newCus=spark.createDataFrame([
                 {'age':a,
@@ -103,15 +105,16 @@ def predict():
                 'default':e,
                 'balance':f,
                 'housing':g,
-                'contact':h,
-                'day':i,
-                'month':j,
-                'duration':k,
-                'campaign':l,
-                'pdays':m,
-                'previous':o,
-                'poutcome':p}])
-    result = loaded_model.predict(newCus)
+                'loan':h,
+                'contact':i,
+                'day':j,
+                'month':k,
+                'duration':l,
+                'campaign':m,
+                'pdays':o,
+                'previous':p,
+                'poutcome':q}])
+    result = loaded_model.transform(newCus).select("deposit").first()[0]
     text = ""
     if result: text = "Dự đoán: Khách hàng này sẽ đầu tư"
     else: text = "Dự đoán: Khách hàng này sẽ không đầu tư"
