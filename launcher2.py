@@ -2,7 +2,7 @@ from re import A
 import ipywidgets as widgets
 from IPython.display import display
 from pyspark.ml.pipeline import PipelineModel
-loaded_model = PipelineModel.load("./model_gbt")
+loaded_model = PipelineModel.load("./model/model_gbt")
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder.appName("Create Spark Df").getOrCreate()
