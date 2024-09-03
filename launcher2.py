@@ -2,7 +2,7 @@ from re import A
 import ipywidgets as widgets
 from IPython.display import display
 from pyspark.ml.pipeline import PipelineModel
-loaded_model = PipelineModel.load("./model/model_gbt")
+loaded_model = PipelineModel.load("./model_gbt")
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder.appName("Create Spark Df").getOrCreate()
@@ -11,18 +11,19 @@ lb1 = widgets.HTML(value='Nhập số tuổi:')
 lb2 = widgets.HTML(value='Chọn công việc:')
 lb3 = widgets.HTML(value='Chọn tình trạng hôn nhân:')
 lb4 = widgets.HTML(value='Chọn trình độ học vấn:')
-lb5 = widgets.HTML(value='Nhập số dư:')
-lb6 = widgets.HTML(value='Chọn có nhà:')
-lb7 = widgets.HTML(value='Chọn nợ:')
-lb8 = widgets.HTML(value='Chọn phương thức liên lạc:')
-lb9 = widgets.HTML(value='Nhập ngày:')
-lb10 = widgets.HTML(value='Chọn tháng:')
-lb11 = widgets.HTML(value='Nhập thời hạn:')
-lb12 = widgets.HTML(value='Nhập campaign:')
-lb13 = widgets.HTML(value='Nhập pdays:')
-lb14 = widgets.HTML(value='Nhập số lần vay trước đó:')
-lb15 = widgets.HTML(value='Chọn poutcome:')
-lb16 = widgets.HTML(value='Đang đợi nhập')
+lb5 = widgets.HTML(value='Chọn default:')
+lb6 = widgets.HTML(value='Nhập số dư:')
+lb7 = widgets.HTML(value='Chọn có nhà:')
+lb8 = widgets.HTML(value='Chọn nợ:')
+lb9 = widgets.HTML(value='Chọn phương thức liên lạc:')
+lb10 = widgets.HTML(value='Nhập ngày:')
+lb11 = widgets.HTML(value='Chọn tháng:')
+lb12 = widgets.HTML(value='Nhập thời hạn:')
+lb13 = widgets.HTML(value='Nhập campaign:')
+lb14 = widgets.HTML(value='Nhập pdays:')
+lb15 = widgets.HTML(value='Nhập số lần vay trước đó:')
+lb16 = widgets.HTML(value='Chọn poutcome:')
+lb17 = widgets.HTML(value='Đang đợi nhập')
 
 lb1.layout.width = '250px'
 lb2.layout.width = '250px'
@@ -39,11 +40,12 @@ lb12.layout.width = '250px'
 lb13.layout.width = '250px'
 lb14.layout.width = '250px'
 lb15.layout.width = '250px'
-lb16.layout.max_width = '100%'
+lb16.layout.width = '250px'
+lb17.layout.max_width = '100%'
 
 age = widgets.FloatText()
-marital = widgets.Dropdown(options=['married', 'single', 'divorced'], disable = False)
 job = widgets.Dropdown(options=['management', 'blue-collar', 'technician', 'management', 'admin.', 'services', 'retired', 'self-employed', 'student', 'unemployed', 'entrepreneur', 'housemaid', 'unknown'], disable = False)
+marital = widgets.Dropdown(options=['married', 'single', 'divorced'], disable = False)
 education = widgets.Dropdown(options=['secondary', 'tertiary', 'primary', 'unknown'], disable = False)
 default = widgets.Dropdown(options=['yes', 'no'], disable = False)
 balance = widgets.FloatText()
@@ -113,7 +115,7 @@ def predict():
     text = ""
     if result: text = "Dự đoán: Khách hàng này sẽ đầu tư"
     else: text = "Dự đoán: Khách hàng này sẽ không đầu tư"
-    lb16.value = text
+    lb17.value = text
 predict_button.on_click(predict)
 
 display(widgets.HBox([lb1, age]))
@@ -123,16 +125,17 @@ display(widgets.HBox([lb4, education]))
 display(widgets.HBox([lb5, default]))
 display(widgets.HBox([lb6, balance]))
 display(widgets.HBox([lb7, housing]))
-display(widgets.HBox([lb8, contact]))
-display(widgets.HBox([lb9, day]))
-display(widgets.HBox([lb10, month]))
-display(widgets.HBox([lb11, duration]))
-display(widgets.HBox([lb12, campaign]))
-display(widgets.HBox([lb13, pdays]))
-display(widgets.HBox([lb14, previous]))
-display(widgets.HBox([lb15, poutcome]))
+display(widgets.HBox([lb8, loan]))
+display(widgets.HBox([lb9, contact]))
+display(widgets.HBox([lb10, day]))
+display(widgets.HBox([lb11, month]))
+display(widgets.HBox([lb12, duration]))
+display(widgets.HBox([lb13, campaign]))
+display(widgets.HBox([lb14, pdays]))
+display(widgets.HBox([lb15, previous]))
+display(widgets.HBox([lb16, poutcome]))
 display(widgets.HBox([predict_button]))
-display(widgets.HBox([lb16]))
+display(widgets.HBox([lb17]))
 
 
 #  columns = ['age', 'job', 'marital', 'education', 'default', 'balance', 'housing', 'contact', 'day', 'month', 'duration', 'campaign', 'pdays', 'previous', 'poutcome']
